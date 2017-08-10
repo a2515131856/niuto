@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贪吃蛇</title>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #wrap{
+            border: 5px solid black;
+            position: relative;
+            margin: 0 auto 0;
+            background-image: repeating-linear-gradient(transparent 50px, #aaf 0, transparent 51px, transparent 100px),repeating-linear-gradient(90deg, transparent 50px, #aaf 0, transparent 51px, transparent 100px);
+        }
+        #wrap>div{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-image: radial-gradient(at 20px 20px, rgba(255,255,255, 0.9),  transparent);
+            box-shadow: 6px 6px 19px -6px;
+        }
+        .snake {
+            background-color: #1F0453;
+        }
+        #snakeHead {
+            background-color: red;
+            z-index: 1;
+        }
+
+        .bean{
+            background-color: #00ff00;
+        }
+
+        #score {
+            font-size: 80px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="score">0</div>
+    <div id="wrap">
+        <div id="snakeHead" class="snake"></div>
+    </div>
+</body>
+<script>
+    var snakeHead = document.getElementById("snakeHead");
+    var wrap = document.getElementById("wrap");
+    var score = document.getElementById("score");
+    var bodyLength = 0; //蛇身体长度
+    var bodyArray = [];
+    var width = 50;
+    var xNum = 0;  // 横向的格子数
+    var yNum = 0;
+
+    const ARROW_LEFT = 37;
+    const ARROW_UP = 38;
+    const ARROW_RIGHT = 39;
+    const ARROW_DOWN = 40;
+    const SPACE = 32;
+
+    var speed = 50;
+    var speedX = speed;
+    var speedY = 0;
+    var interval = 500;  // 每次移动的时间间隔
+    var timer = null;
+
+    resizeWrap();
+    //蛇头初始位置, 中间
+    snakeHead.style.left = Math.floor(xNum / 2) * 50 + "px";
+    snakeHead.style.top = Math.floor(yNum / 2)  * 50 + "px";
+
+    getBean();
+    mainLoop();
+
+    //主循环
+    function mainLoop (){
+        timer = setInterval(function () {
+            if(checkCrashBorder() || checkSuicide()) {
+                clearInterval(timer);
+                alert("Game Over!");
+                return;
+            }
+            createBody(snakeHead.style.top, snakeHead.style.left, "snake", bodyLength, bodyArray, wrap);
+            snakeHead.style.left = snakeHead.offsetLeft + speedX + "px";
+            snakeHead.style.top = snakeHead.offsetTop + speedY + "px";
+            if(checkEat()) {
+                bodyLength++;
+                score.innerHTML = parseInt(score.innerHTML) + 1;
+                getBean();
+                interval -= 10;
+                if(interval < 250) {
+                    interval = 250;
+                }
+                clearInterval(timer);
+                mainLoop();
+            }
+        }, interval);
+    }
+
+    //按键事件, 修改方向
+    document.onkeydown = function (ev) {
+        var eve = ev || window.event;
+        switch (eve.keyCode){
+            case ARROW_LEFT : speedX = -speed; speedY = 0; break;
+            case ARROW_UP : speedX = 0; speedY = -speed; break;
+            case ARROW_RIGHT : speedX = speed; speedY = 0; break;
+            case ARROW_DOWN : speedX = 0; speedY = speed; break;
+            case SPACE : {
+                if(timer) {
+                    clearInterval(timer);
+                    timer = null;
+                } else {
+                    mainLoop();
+                }
+            }
+        }
+    }
+
+    //创建并管理蛇的身体
+    function createBody(top, left, className, length, bodyArray, fatherElement) {
+        var newDiv = document.createElement("div");
+        newDiv.className = className;
+        newDiv.style.top = top;
+        newDiv.style.left = left;
+        fatherElement.appendChild(newDiv);
+        bodyArray.push(newDiv);
+        if (bodyArray.length > length){
+            var oldDIv = bodyArray.shift();
+            fatherElement.removeChild(oldDIv);
+        }
+    }
+    
+    //检测是否撞到自己
+    function checkSuicide (){
+        for (var i = 0; i < bodyArray.length; i++) {
+            if(checkCrash(bodyArray[i], snakeHead)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+//    检测两个元素是否相撞(重合)
+    function checkCrash (div1, div2){
+        if(div1.style.top == div2.style.top && div1.style.left == div2.style.left) {
+            return true;
+        }
+        return false;
+    }
+    
+    //检测是否碰到墙壁
+    function checkCrashBorder (){
+        //碰壁
+        if(snakeHead.offsetLeft > wrap.clientWidth - snakeHead.clientWidth ||
+           snakeHead.offsetLeft < 0 ||
+           snakeHead.offsetTop > wrap.clientHeight - snakeHead.clientHeight ||
+           snakeHead.offsetTop < 0 )
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    //检测是否吃到豆豆
+    function checkEat (){
+        var bean = document.querySelector(".bean");
+        if(checkCrash(snakeHead, bean)) {
+            bean.remove();
+            return true;
+        }
+        return false;
+    }
+
+//    修改wrap的大小
+    function resizeWrap(){
+        wrap.style.width = (Math.floor(document.body.clientWidth / width) - 2) * width + "px";
+        wrap.style.height = (Math.floor(document.body.clientHeight / width) - 4) * width + "px";
+        xNum = parseInt(wrap.style.width) / 50;
+        yNum = parseInt(wrap.style.height) / 50;
+    }
+
+    window.onresize = function () {
+        resizeWrap();
+    }
+
+//    随机创建豆豆
+    function getBean (){
+        var bean = document.createElement("div");
+        bean.style.top = getRandom(0, yNum - 1) * 50 + "px";
+        bean.style.left = getRandom(0, xNum - 1) * 50 + "px";
+        bean.className = "bean";
+        wrap.appendChild(bean)
+    }
+
+    /*
+     * 获取一个指定范围内的随机数
+     * min: 左侧范围
+     * max: 右侧范围
+     */
+    function getRandom(num1, num2) {
+        //判断 num1 和 num2 的大小
+        if (num1 > num2){
+            var temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+        var num = parseInt(Math.random() * (num2 - num1 + 1) + num1);
+        return num;
+    }
+
+</script>
+</html>
