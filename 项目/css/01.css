@@ -1,0 +1,272 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+ul{
+    padding: 0;
+    display: inline;
+}
+li{
+    list-style-type: none;
+}
+#max{
+    background-color: black;
+    height: 67px;
+    /*box-sizing: border-box;*/
+    position: relative;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, input, button, textarea, p, th, td {
+    padding: 0;
+    margin: 0;
+    font-family: Arial,sans-serif,Microsoft YaHei;
+}
+
+#a-dax {
+    max-width: 1127px;
+    margin: 0 auto;
+    position: relative;
+}
+#lefft-ul{
+    position: absolute;
+    width: 100%;
+    margin-top: 20px;
+}
+#lefft-uss{
+    float: right;
+    position: absolute;
+    right: -32px;
+}
+#lefft-uss>li {
+    display: inline;
+    color: #A8A8A8;
+    margin: 10px 30px 30px 10px;
+    padding: 5px;
+}
+#lefft-uss>li:hover{
+    color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+
+
+
+
+#ksdj {
+
+    display: none;
+    position: relative;
+    width: 1.8em;
+    /* height: 1.2em; */
+    float: right;
+    margin-right: 5%;
+    top: 55%;
+    margin-top: 0.4em;
+    background: url(../img/12.png) no-repeat;
+    background-size: 100% 100%;
+    border: 0;
+    outline-style: none;
+}
+
+
+@media (max-width: 850px){
+    #lefft-uss{
+        display: none;
+    }
+
+    #ksdj{
+        display: block;
+    }
+}
+/*导航结束*/
+#dousfa {
+    width: 980px;
+    height: 562px;
+    -webkit-transition: all 0.55s;
+    margin: 0 auto;
+}
+
+#sdh1 {
+    height: 160px;
+    /*width: 100%;*/
+    position: relative;
+
+    overflow: hidden;
+    /* width: 1025px; */
+    /* min-height: 11.25em; */
+    width: 100%;
+    border-bottom: 1px solid #e1e1e1;
+    /* min-height: 240px; */
+    display: block;
+}
+
+#skdha {
+
+    height: 100%;
+    position: relative;
+
+}
+
+.shuadd {
+    background: rgb(176, 176, 176);
+    /* width: 21px; */
+    height: 159px;
+    width: 1.2em;
+    /* min-height: 240px; */
+    /*background-color: #CFDB00;*/
+    float: left;
+    overflow: hidden;
+    display: block;
+    transition: all 0.35s;
+    -webkit-transition: all 0.55s;
+}
+
+.leftadd {
+    position: relative;
+    max-width: 667px;
+    max-height: 159px;
+    /* width: 63.4%; */
+    width: 60%;
+    float: left;
+    overflow: hidden;
+    -webkit-transition: all 0.55s;
+
+}
+.leftadd>img{
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 1.55s;
+}
+
+.youadd {
+    width: 34%;
+    float: left;
+    padding-left: 2%;
+    overflow: hidden;
+
+}
+
+.sdh {
+    position: relative;
+    overflow: hidden;
+    /* width: 1025px; */
+    /* min-height: 11.25em; */
+    width: 100%;
+    border-bottom: 1px solid #e1e1e1;
+    /* min-height: 240px; */
+    display: block;
+}
+h6{
+    font-size: 25px;
+}
+#flssxs {
+    float: right;
+}
+.sdh:hover .home_pic_one_p{
+    opacity: 1;
+}
+.sdh:hover .homes_pic_three{
+    opacity: 0;
+}
+.sdh:hover .shuadd{
+    background: rgb(207,219,0);
+}
+.home_pic_one_p{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+}
+#sdasd{
+    float: right;text-align: right; margin-top: 10px;
+}
+@media (max-width: 640px){
+
+    .shuadd{
+        display: none;
+    }
+    h6{
+       text-align: start;
+        width: 180px;
+        margin: 0 auto;
+    }
+    #flssxs{
+        float: none;
+    }
+    p{
+        text-align: start;
+        float: left;
+    }
+    .youadd{
+      width: 100%;
+    }
+    .sdh{
+         width: 100%;
+         min-height: 11.25em;
+         min-height: 240px;
+        display: grid;
+    }
+    #dousfa{
+        width: 100%;
+    }
+    #skdha{
+        width: 100%;
+    }
+    #sdasd{
+        float: left;
+        text-align: left;
+    }
+    .leftadd{
+        width: 100%;
+    }
+}
+/*图片加载完成*/
+
+#quanx{
+    width: 203px;
+    margin: 0 auto;
+}
+.shangx{
+    width: 30px;
+    margin: 0 auto;
+}
+
+#mail_h{
+    display: none;
+}
+.shangx:hover #mail_h{
+    display: block;
+}
+.shangx:hover #mail{
+    display: none;
+}
+.facebook_h{
+    display: none;
+}
+.adddsa:hover .facebook{
+    display: none;
+}
+.adddsa:hover .facebook_h{
+    display: block;
+}
+.adddsa{
+
+    display: inline-block;
+    padding-left: 12px;
+    width: 25px;
+    height: 25px;
+
+}
+.zhoangdui{
+    width: 162px;
+   margin: 0 auto;
+    padding-top: 10px;
+}
+.xians{
+    color: #868080;
+    font-size: 10px;
+    padding-top: 10px;
+}
+
+

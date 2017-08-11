@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/swiper.min.css">
+    <style type="text/css">
+        .main {
+            width: 910px;
+            height: 350px;
+            border: 1px solid black;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .main-left {
+            width: 600px;
+            height: 350px;
+            border: 1px solid blue;
+            float: left;
+        }
+
+        .main-right {
+            position: relative;
+            width: 290px;
+            height: 350px;
+            border: 1px solid red;
+            float: right;
+        }
+
+        .main-left img{
+            width: 100%;
+            height: 100%;
+        }
+
+        .tbgStart{
+            position: absolute;
+            top: -156px;
+            left: 0;
+        }
+        .tStart{
+            position: absolute;
+            top: 60px;
+            left: -290px;
+        }
+        .wStart{
+            position: absolute;
+            top: 100px;
+            left: -290px;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/animate.min.css">
+</head>
+<body>
+
+    <div class="main">
+        <div class="main-left swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="../img/publicity1.png"/></div>
+                <div class="swiper-slide"><img src="../img/publicity2.jpg"/></div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+        <div class="main-right swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="background-image: url('../img/pic1.jpg')">
+                    <img class="tbgStart" src="../img/tbg1.png">
+                    <img class="tStart" src="../img/t1.png">
+                    <img class="wStart" src="../img/w1.png">
+                </div>
+                <div class="swiper-slide" style="background-image: url('../img/pic2.jpg')">
+                    <img class="tbgStart" src="../img/tbg2.png">
+                    <img class="tStart" src="../img/t2.png">
+                    <img class="wStart" src="../img/w2.png">
+                </div>
+                <div class="swiper-slide" style="background-image: url('../img/pic3.jpg')">
+                    <img class="tbgStart" src="../img/tbg3.png">
+                    <img class="tStart" src="../img/t3.png">
+                    <img class="wStart" src="../img/w3.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/swiper.min.js"></script>
+    <script src="../js/swiper.animate.min.js"></script>
+</body>
+<script>
+    //创建swiper对象:
+    var leftSwiper = new Swiper(".main-left", {
+        loop : true,
+        autoplay : 8000,
+        effect : "fade"
+    });
+    //右侧动画
+    var rightSwiper = new Swiper(".main-right", {
+        loop : true,
+        speed : 300,
+        effect : "fade"
+    });
+    //控制main-right动画
+    var speed = 1000; //每个小图片动画的时长
+    var i = 0;//设置一个计数器
+    action();//单次执行的动画,为了页面加载出来就开始走第一遍
+    setInterval(action, 6000);//循环执行的定时器
+    function action() {
+        i++;
+        if(i > 3)
+        {
+            i = 1;
+        }
+        $(".tbgStart:eq("+i+")").animate({
+            top : 0
+        }, speed, function () {
+            $(".tStart:eq("+i+")").animate({
+                left : 0
+            }, speed, function () {
+                $(".wStart:eq("+i+")").animate({
+                    left : 0
+                }, speed, function () {
+                    $(".tStart:eq("+i+")").animate({
+                        left : 290
+                    }, speed, function () {
+                        //将移出的t1改为原始值:
+                        $(".tStart:eq("+i+")").css("left", -290);
+                        $(".wStart:eq("+i+")").animate({
+                            left : 290
+                        }, speed, function () {
+                            //将移出的w1改为原始值:
+                            $(".wStart:eq("+i+")").css("left", -290);
+                            $(".tbgStart:eq("+i+")").animate({
+                                top : -156
+                            }, speed, function () {
+                                //slideTo()是swiper自带的函数,传一个参数就会切换到第i张
+                                rightSwiper.slideTo(i); //在动画全都走完后,切换下一张底图(前提是swiper初始化时没有自动轮播)
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+</script>
+</html>
