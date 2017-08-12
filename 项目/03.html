@@ -51,7 +51,7 @@
             <!--瀑布流-->
         <ul id="flow"></ul>
 
-        
+
 
 
 <script>
@@ -139,10 +139,19 @@
     function layoutLi() {
 
         //每个li的固定宽度:
-        var liWidth = document.body.clientWidth / 4;
 
-        colHeightArr = [0,0,0,0];
 
+
+        console.log(document.body.clientWidth);
+        if(document.body.clientWidth<=500)
+        {
+            colHeightArr = [0,0];
+            liWidth = document.body.clientWidth/2;
+        }else {
+            var liWidth = document.body.clientWidth / 4;
+
+            colHeightArr = [0,0,0,0];
+        }
         //获取到所有li:
         for(var i = 0; i < oLis.length; i++){
             var li = oLis[i];
