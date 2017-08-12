@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/01.css">
+    <script src="js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="js/swiper.min.css">
+    <script src="js/swiper.min.js"></script>
+</head>
+<body>
+<!--顶部导航-->
+<div id="qiandia">
+                <span id="jsadhaa">
+                </span>
+</div>
+<div id="max">
+
+    <div id="a-dax">
+        <ul id="lefft-ul">
+            <li style="position: absolute"><img src="img/shininglogo.png"  alt=""></li>
+            <ul id="lefft-uss">
+                <li>Home</li>
+                <li>About</li>
+                <li style="border: 1px solid white;color: white; border-radius: 10px">Rendering</li>
+                <li>3D Animation</li>
+                <li>Bim</li>
+                <li>Contact</li>
+            </ul>
+            <input type="button" id="ksdj">
+        </ul>
+
+    </div>
+</div>
+<!--导航结束-->
+
+            <!--大轮播-->
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image:url(img/Rendering_shining_files/室外1021更新-0001.jpg)"></div>
+        <div class="swiper-slide" style="background-image:url(img/Rendering_shining_files/室外1021更新-0002.jpg)"></div>
+        <div class="swiper-slide" style="background-image:url(img/Rendering_shining_files/室外1021更新-0003.jpg)"></div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination swiper-pagination-white"></div>
+    <!-- Add Arrows -->
+</div>
+            <!--瀑布流-->
+        <ul id="flow"></ul>
+
+        
+
+
+<script>
+
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 30,
+        effect: 'fade'
+    });
+
+    var qiandia = document.getElementById("qiandia");
+    var jsadhaa = document.getElementById("jsadhaa");
+
+    var oWrap = document.getElementById("flow");
+    var oLis = oWrap.getElementsByTagName("li");
+
+
+
+    var maxW = document.body.clientWidth;
+    var count = 0;
+    for(var i = 0 ; i <32; i++ )
+    {
+
+        var newli = document.createElement("li");
+        var newimg =new Image();
+        newli.value = i+1;
+        newimg.src = "img/Rendering_shining_files/"+(i+1)+".jpg";
+        newli.appendChild(newimg);
+        oWrap.appendChild(newli);
+
+
+        newimg.onload = function () {
+
+            count++;
+            if(count==32)
+            {
+                for(var i = 0 ; i < oLis.length ; i++ )
+                {
+                    var newLi = document.createElement("div");
+                    var newdafas = document.createElement("span");
+                    newdafas.className = "niuxjcha-jsh";
+                    newLi.style.width ="100%";
+                    newLi.style.height = "98%";
+                    newLi.className = "sjahwhr";
+                    oLis[i].appendChild(newLi);
+                    newLi.appendChild(newdafas);
+
+                }
+            }
+
+        };
+
+
+
+    }
+
+
+
+    //每给li之间的空隙
+    var liSpace = 10;
+
+    //声明一个存放每一列高度的数组:
+    var colHeightArr = [0,0,0,0];
+
+    window.onresize = function () {
+
+//        maxW = document.body.clientWidth;
+//        for(var i = 0 ; i < 32 ; i++ )
+//        {
+//            oLis[i].style.width = (maxW / 4) +"px";
+//        }
+
+//        colHeightArr=[0,0,0,0];
+
+
+
+        layoutLi();
+
+    };
+
+    //为每个li进行合理的布局:
+    function layoutLi() {
+
+        //每个li的固定宽度:
+        var liWidth = document.body.clientWidth / 4;
+
+        colHeightArr = [0,0,0,0];
+
+        //获取到所有li:
+        for(var i = 0; i < oLis.length; i++){
+            var li = oLis[i];
+            //找到长度最矮的那一列:
+            li.style.width = liWidth + "px";
+            var minIndex = findMinValueIndex(colHeightArr);
+            li.style.left = minIndex * (liSpace + liWidth) + "px";
+            li.style.top = colHeightArr[minIndex] + "px";
+            colHeightArr[minIndex] += li.clientHeight + liSpace;
+        }
+
+    }
+
+    //获取数组最小值下标的函数:
+    function findMinValueIndex(array) {
+        var minIndex = 0;
+        var minValue = array[0];
+        for(var i = 0; i < array.length; i++){
+            if(minValue > array[i]){
+                minValue = array[i];
+                minIndex = i;//记录最小值下标
+            }
+        }
+        return minIndex;
+    }
+
+    window.onload = function () {
+        layoutLi();
+    };
+
+
+    for(var i = 0 ; i < oLis.length ; i++ )
+    {
+
+       oLis[i].onclick =function () {
+
+           var arrarr = this;
+           var nueIMAGE = new Image();
+           newimg.src = "img/Rendering_shining_files/0"+this.value+".jpg";
+           qiandia.style.display = "block";
+           jsadhaa.appendChild(newimg);
+
+           newimg.onclick = function () {
+               qiandia.style.display = "none";
+               newimg.remove();
+           }
+       }
+    }
+
+</script>
+
+</body>
+</html>
